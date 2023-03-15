@@ -8,4 +8,8 @@ const GETarticles = () => {
     return api.get('/articles')
 }
 
-export { GETarticles }
+const GETarticle = (article_id) => {
+    return api.get(`/articles/${article_id}`)
+}
+
+export { GETarticles, GETarticle }
