@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import '../styles/Home.css'
 
 export default function Home(){
-
+    const [loadingArticles, setLoadingArticles] = useState(false)
     const [articles, setArticles] = useState(false);
 
     useEffect(()=>{
+        setLoadingArticles(true)
         GETarticles().then((data)=>{
-            return setArticles(data.data.articles)})
+            setArticles(data.data.articles)
+            setLoadingArticles(false)})
     }, [])
 
     //Shortens article to a descriptive length. To be refined.. 
@@ -20,8 +22,8 @@ export default function Home(){
     //Generates uniques key of parent list, 
  
 
-    //If article array has been retrieved
-    if(articles){
+    //If not loading array amd article array has been retrieved 
+    if(articles && !loadingArticles){
         let articleArrayLength = articles.length - 1;
 
         let slicedArticles = articles.slice(1, 7)
