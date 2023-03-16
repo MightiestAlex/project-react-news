@@ -1,6 +1,6 @@
 
-export default function ArticleDisply({ article }){
-    console.log(article)
+export default function ArticleDisplay({ article }){
+    
     return (
         <section>
         <h1>{article.title}</h1>
