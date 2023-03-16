@@ -36,7 +36,7 @@ export default function Article(){
             </>}
             {comments && //Will have to add hard coded user at the moment!
             <>
-            <CommentPOST />
+            <CommentPOST article_id={article_id}/>
             <CommentsDisplay comments={comments}/>
             </>}
         </main>

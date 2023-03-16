@@ -1,35 +1,50 @@
 import { useState, useEffect } from 'react';
 
-export default function CommentPOST(){
+import { POSTcomment } from '../utils/apis.jsx'
+
+export default function CommentPOST({ article_id }){
 
     const [author, setAuthor] = useState();
-    const [topic, setTopic] = useState();
     const [body, setBody] = useState();
+    const [userComment, setUserComment] = useState()
 
     function eHandler(event){
         event.preventDefault()
-        console.log(event.target)
+
+        if(userComment){return}
+
+        const comment = {
+            username: 'grumpy19',
+            body: body
+         }  
+        
+        POSTcomment(article_id, {username: 'grumpy19', body: body})
+        .then((response)=>{
+            console.log(response.data.post.body)
+            setUserComment(response.data.post.body)
+        }).catch((error)=>{
+            console.log('Error: ', error)
+        })  
     }
 
     return(
+        <>
         <section className="commentBox" onSubmit={eHandler}>
             <form className="box" >
             <fieldset>
-                <legend>Comments Please</legend>
-                <p>User:</p>
-                <input required type="text" name="author" value={author} onChange={((event)=>{setAuthor(event.target.value)})}/>
-                <p>Topic:</p>
-                <input required type="text" name="topic"/>
-                <br />
                 <p>Comment:</p>
-                <textarea required></textarea>
+                <textarea required value={body} onChange={((event)=>{setBody(event.target.value)})}></textarea>
                 <br />
                 <button type="submit">POST</button>
             </fieldset>
             </form>
         </section>
+        <section className='userComment'>
+            <h3>Your comment:</h3>
+            <p>{ (userComment) ? userComment : 'No Commment yet!'}</p>
+        </section>
+        </>
     )
 }
 
-//Allow new topics
-//title, topic, author, body, url 
+//Can only post a comment with user already on server!
